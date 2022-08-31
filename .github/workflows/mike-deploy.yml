@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       env:
-            GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
@@ -28,6 +28,8 @@ jobs:
         git config user.name "$(git log -n 1 --pretty=format:%an)"
         git config user.email "$(git log -n 1 --pretty=format:%ae)"
     - name: Build package
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
       run: |
         git fetch origin deploy:deploy
         mike deploy --push --branch deploy --rebase ${{ github.ref_name }}
